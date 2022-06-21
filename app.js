@@ -10,8 +10,6 @@ const replaceColor = require('replace-color')
 
 
 //route
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -50,12 +48,12 @@ app.post('/change', upload.single('change'), (req, res) => {
         image: req.file.path,
         colors: {
             type: 'hex',
-            targetColor: colorHex,
+            targetColor: `${colorHex}`,
             replaceColor: '#FFFFFF'
         }
     }, (err, jimpObject) => {
         if (err) return console.log(err);
-        let imagname = Date.now().toFixed(6) + 'output.jpg'
+        let imagname = Date.now().toFixed(4) + 'output.jpg'
 
         jimpObject.write(`./public/images/${imagname}`, (err, data) => {
             if (err) return console.log(err)
@@ -66,7 +64,6 @@ app.post('/change', upload.single('change'), (req, res) => {
 })
 
 app.post('/upload', upload.single('image'), (req, res) => {
-    console.log(req.file);
 
     var image = fs.readFileSync(
         __dirname + '/public/images/' + req.file.originalname,
